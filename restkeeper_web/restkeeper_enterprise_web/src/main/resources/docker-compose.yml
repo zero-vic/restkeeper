@@ -1,0 +1,35 @@
+version: "2"
+services:
+  elasticsearch:
+    image: elasticsearch:7.4.2
+    restart: always
+    container_name: es
+    ports:
+      - 9201:9201
+      - 9301:9301
+      - 9101:9101
+    environment:
+      - discovery.type=single-node
+      - TZ=Asia/Shanghai
+    #command: rm -rf /usr/share/elasticsearch/config/elasticsearch.yml
+    privileged: true
+    volumes:
+      - /root/soft/base/data/elasticsearch/data:/usr/share/elasticsearch/data
+      - /root/soft/base/data/elasticsearch/logs:/usr/share/elasticsearch/logs
+      - /root/soft/base/data/elasticsearch/plugins:/usr/share/elasticsearch/plugins
+      - /root/soft/base/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  logstash:
+    image: logstash:7.4.2
+    restart: always
+    container_name: ls
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /root/soft/base/data/logstash/pipeline/:/usr/share/logstash/pipeline/
+      - /root/soft/base/data/logstash/glog:/var/log/glog/
+      - /root/soft/base/data/mysql-connector-java-8.0.15.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-8.0.15.jar
+      - /root/soft/base/data/mysql-connector-java-8.0.15.jar:/resource/mysql-connector-java-8.0.15.jar
+      - /root/soft/base/data/logstash/mysql:/mysql
+    command: bin/logstash -f /usr/share/logstash/pipeline/mysqltoes.conf

@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: restkeeper-job
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.200.128:8848
+      config:
+        server-addr: 192.168.200.128:8848
+        file-extension: yml
+#        shared-dataids: common.yml
+#        refreshable-dataids: common.yml
+  datasource:
+    store:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.200.128:3306/restkeeper_store?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
+    order:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.200.128:3306/restkeeper_order?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: root
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8001
+
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://192.168.200.128:8080/xxl-job-admin #xxl-job-admin的地址
+    executor:
+      appname: restkeeper-job  #执行器的名称
+      port: 9999     #本地程序和xxl-job的通信端口
+      ip: 192.168.1.19 #本地Ip
+      logretentiondays: 30 #日志保存时长(30天)
