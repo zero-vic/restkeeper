@@ -1,0 +1,64 @@
+dubbo:
+  scan:
+    base-packages: com.restkeeper
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+      serialization: kryo
+  registry:
+    address: spring-cloud://192.168.200.128
+  consumer:
+    timeout: 600000
+    filter: dubboConsumerContextFilter
+
+gateway:
+  excludedUrls: /login,/operator-web/login,/store-web/login
+  secret: f!TMw@Z#O&g37w1t
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    com.restkeeper: debug
+    com.alibaba.nacos: warn
+spring:
+  rabbitmq:
+    host: 192.168.200.128
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true #交换机的确认
+    publisher-returns: true #队列的确认
+    listener:
+      simple:
+        acknowledge-mode: manual #默认情况下消息消费者是自动确认消息的，如果要手动确认消息则需要修改确认模式为manual
+        prefetch: 1 #消费者每次从队列获取的消息数量。此属性当不设置时为：轮询分发，设置为1为：公平分发
+  cloud:
+    alicloud:
+      access-key: LTAI4G5Vn1V3Javnf9BAaZDS
+      secret-key: kwOVKONSD7mSrC1Bdmc2mFooQ3EuaN
+      oss:
+        endpoint: oss-cn-chengdu.aliyuncs.com
+  redis:
+    host: 192.168.200.128
+    port: 6379
+    database: 0
+    timeout: 1800000
+    password:
+    lettuce:
+      pool:
+        max-active: 20 #最大连接数
+        max-wait: -1    #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5    #最大空闲
+        min-idle: 0     #最小空闲
+bucketName: gp-video
+sms:
+  operator:
+    signName: 阿里云短信测试
+    templateCode: SMS_154950909
+es: 
+  host: 192.168.200.128
+  port: 9200

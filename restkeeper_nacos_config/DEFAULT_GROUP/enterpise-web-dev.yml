@@ -1,0 +1,10 @@
+dubbo:
+  registry:
+    address: spring-cloud://192.168.200.128
+  cloud:
+    subscribed-services: operator-dubbo-provider,shop-dubbo-provider,store-dubbo-provider,order-dubbo-provider
+  protocols:
+    dubbo:
+      port: -1
+      name: dubbo
+      serialization: kryo
